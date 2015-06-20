@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Venuenator" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/venue_primary</item>
+        <item name="colorPrimaryDark">@color/venue_dark</item>
+        <item name="colorAccent">@color/venue_accent</item>
+        <item name="android:textColor">@color/venue_text</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="actionMenuTextColor">@color/venue_action_text</item>
+    </style>
+</resources>

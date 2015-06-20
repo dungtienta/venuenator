@@ -1,0 +1,77 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 xmlns:tools="http://schemas.android.com/tools"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 tools:context="com.dungta.www.phunwareinterviewhomework.VenueFragment">
+
+        <FrameLayout
+            android:id="@+id/venue_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/venue_image"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:layout_margin="8dp"
+                />
+
+            <TextView
+                android:id="@+id/venue_name_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#CCFFFFFF"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="32dp"
+                android:layout_gravity="bottom"
+                android:textSize="24sp"
+                style="?android:listSeparatorTextViewStyle"/>
+
+            <TextView
+                android:id="@+id/venue_address_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:layout_gravity="bottom"
+                android:textColor="@color/venue_detail_text"
+                android:textSize="16sp"/>
+
+        </FrameLayout>
+
+        <fragment
+            android:id="@+id/venue_map"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/venue_header"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            class="com.google.android.gms.maps.SupportMapFragment" />
+
+        <TextView
+            android:id="@+id/venue_information_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/venue_map"
+            android:paddingTop="16dp"
+            android:textSize="20sp"
+            android:text="@string/venue_information_title"
+            style="?android:listSeparatorTextViewStyle"/>
+
+        <TextView
+            android:id="@+id/venue_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/venue_information_title"
+            android:paddingTop="16dp"/>
+
+    </RelativeLayout>
+
+</ScrollView>
