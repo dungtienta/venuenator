@@ -9,10 +9,15 @@ import retrofit.Callback;
 import retrofit.http.GET;
 
 /**
- * Created by Dung on 6/10/2015.
+ * Interface used by Retrofit created from REST API
  */
 public interface VenuesAPI {
 
+    /**
+     * Creates request method by providing HTTP annotation and relative URL
+     *
+     * @param response query parameter
+     */
     @GET("/jon-hancock-phunware/nflapi-static.json")
     public void getFeed(Callback<ArrayList<Venue>> response);
 }

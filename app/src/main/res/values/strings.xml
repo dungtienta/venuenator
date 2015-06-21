@@ -12,4 +12,9 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- All toast texts -->
+    <string name="venue_refresh_success">Refresh successful!</string>
+    <string name="venue_refresh_fail">Refresh failed!</string>
+
+    <string name="venue_create_chooser_send">Send to:</string>
 </resources>

@@ -3,7 +3,6 @@ package com.dungta.www.phunwareinterviewhomework;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,15 +11,22 @@ import com.dungta.www.phunwareinterviewhomework.model.Venue;
 import com.dungta.www.phunwareinterviewhomework.model.VenueList;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 /**
- * Created by Dung on 6/15/2015.
+ * ViewPager activity class, hosts venue fragment
  */
 public class VenuePagerActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private ArrayList<Venue> mVenues;
 
+    /**
+     * Called by system, creates activity by setting layout and loading saved bundle info.
+     * Creates fragment manager and sets adapter to handle fragments and user page turning
+     *
+     * Keeps track of which Venue object is loaded to pass correct info to new fragment.
+     *
+     * @param savedInstanceState bundle with information from previous saved state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +49,7 @@ public class VenuePagerActivity extends AppCompatActivity {
                 return mVenues.size();
             }
         });
-
+        //Set listener for when page changes
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             public void onPageScrollStateChanged(int state) {
             }

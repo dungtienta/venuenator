@@ -4,32 +4,46 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import com.dungta.www.phunwareinterviewhomework.model.Venue;
 
 /**
- * Created by Dung on 12/30/2014.
+ * Abstract class used to host fragments on specified layout
  */
 public abstract class SingleFragmentActivity extends AppCompatActivity
     implements VenueListFragment.Callbacks {
+
+    /**
+     * Override to return specific fragment to be hosted
+     *
+     * @return fragment to be hosted
+     */
     protected abstract Fragment createFragment();
 
+    /**
+     * Override to specify what layout to be used to host fragment
+     *
+     * @return id layout of fragment's host activity
+     */
     protected int getLayoutResId() {
         return R.layout.activity_fragment;
     }
 
+    /**
+     * Called by system for initial creation of activity. Sets activity view, gets state.
+     * Instantiates object of fragment manager to add fragment while activity is running
+     * Grabs fragment if exists already (usually from recreation)
+     *
+     * @param savedInstanceState bundle with information from previous saved state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.venue_toolbar);
-        setSupportActionBar(toolbar);
-
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
 
+        //If fragment isn't created yet, create fragment and add to host activity
         if (fragment == null) {
             fragment = createFragment();
             fm.beginTransaction()
@@ -38,7 +52,10 @@ public abstract class SingleFragmentActivity extends AppCompatActivity
         }
     }
 
-    public void onVenueSelected(Venue venue) {
-
-    }
+    /**
+     * Override method to handle venue object that is selected
+     *
+     * @param venue object that is selected
+     */
+    public void onVenueSelected(Venue venue) {}
 }

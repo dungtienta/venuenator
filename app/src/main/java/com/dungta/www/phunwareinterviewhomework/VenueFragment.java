@@ -1,10 +1,13 @@
 package com.dungta.www.phunwareinterviewhomework;
 
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,9 +22,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
+/**
+ * Fragment class to be hosted by either single fragment or
+ * master-detail activity. Populates view with information from selected
+ * venue object.
+ */
 public class VenueFragment extends Fragment{
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String EXTRA_VENUE_ID =
             "com.dungta.www.phunwareinterviewhomework.venue_id";
 
@@ -41,10 +47,9 @@ public class VenueFragment extends Fragment{
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param venueId Parameter 1.
+     * @param venueId id of venue selected.
      * @return A new instance of fragment VenueFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static VenueFragment newInstance(long venueId) {
         Bundle args = new Bundle();
         args.putSerializable(EXTRA_VENUE_ID, venueId);
@@ -55,21 +60,38 @@ public class VenueFragment extends Fragment{
         return fragment;
     }
 
-    public VenueFragment() {
-        // Required empty public constructor
-    }
-
+    /**
+     * Method called by system, handles venue object selected. initializes
+     * relevant variables used later to populate UI elements.
+     *
+     * @param savedInstanceState bundle with information from previous saved state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Make sure arguments are passed to fragment
         if (getArguments() != null) {
+            //Get id from arguments to correctly get selected venue object
             long venueId = (long) getArguments().getSerializable(EXTRA_VENUE_ID);
-            sFragmentManager = getFragmentManager();
+
+            //Set venue information to access later for view population
             mVenue = VenueList.get(getActivity()).getVenue(venueId);
             mVenueLocation = new LatLng(mVenue.getLatitude(), mVenue.getLongitude());
+
+            setHasOptionsMenu(true);
         }
     }
 
+    /**
+     * Called by system, inflates views from xml layout definition
+     * Populates view elements with venue information
+     *
+     * @param inflater object used to inflate views in fragment from xml layout
+     * @param container parent view fragment ui to attach to.
+     * @param savedInstanceState bundle with information from previous saved state
+     * @return view inflated and
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,10 +101,11 @@ public class VenueFragment extends Fragment{
         mNameTextView = (TextView) v.findViewById(R.id.venue_name_textView);
         mNameTextView.setText(mVenue.getName());
 
-        mAddressTextView = (TextView) v.findViewById(R.id.venue_address_textView);
-        mAddressTextView.setText(mVenue.getAddress()
-                + ", " + mVenue.getCity() + " " + mVenue.getZip());
-
+        if (!mVenue.getAddress().isEmpty()) {
+            mAddressTextView = (TextView) v.findViewById(R.id.venue_address_textView);
+            mAddressTextView.setText(mVenue.getAddress()
+                    + ", " + mVenue.getCity() + " " + mVenue.getZip());
+        }
         //Load image url from venue object into ImageView
         mImageUrl = mVenue.getImageUrl();
         mVenueImageView = (ImageView) v.findViewById(R.id.venue_image);
@@ -106,5 +129,56 @@ public class VenueFragment extends Fragment{
         mPhoneTextView.setText(mVenue.getPhone());
 
         return v;
+    }
+
+    /**
+     * Called by system to inflate options menu
+     *
+     * @param menu menu which items are placed
+     * @param inflater class instance used to instantiate xml to menu objects
+     */
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_venue_single_frag, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    /**
+     * Called by the system when an item from the options
+     * menu is selected. Param item determines which item was selected by
+     * a unique ID.
+     *
+     * @param item option item selected
+     * @return boolean if item selected was handled successfully
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_item_share:
+                shareVenue();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * Creates  and starts intent to share name/address of
+     * the current venue. Starts createChooser to allow user to select
+     * application to handle intent.
+     */
+    private void shareVenue() {
+        //TODO: Put more extras if necessary, (ex: address -> Google Maps)
+        Intent sendIntent = new Intent();
+        //Set intent action and contents
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT,
+                "Venue name: " + mVenue.getName() + "\n" +
+                "Venue address: " + mVenue.getAddress() + ", " +
+                mVenue.getCity() + " " + mVenue.getZip());
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent,
+                getResources().getText(R.string.venue_create_chooser_send)));
     }
 }

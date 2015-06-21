@@ -8,20 +8,35 @@ import android.support.v4.app.FragmentManager;
 import com.dungta.www.phunwareinterviewhomework.model.Venue;
 
 /**
- * Created by Dung on 6/10/2015.
+ * Activity class subclassing SingleFragmentActivity, hosts list fragment.
  */
 public class VenueListActivity extends SingleFragmentActivity {
 
+    /**
+     * Overrides parent class' createFragment() to specify list fragment to host
+     *
+     * @return fragment list fragment to host
+     */
     @Override
     protected Fragment createFragment() {
         return new VenueListFragment();
     }
 
+    /**
+     * Overrides parent class' getLayoutResId to specify layout
+     *
+     * @return id layout id to use
+     */
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_masterdetail;
     }
 
+    /**
+     * Determines what to do with object selected from menu
+     *
+     * @param venue object that is selected
+     */
     @Override
     public void onVenueSelected(Venue venue) {
         if (findViewById(R.id.detailFragmentContainer) == null) {

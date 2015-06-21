@@ -4,6 +4,8 @@ package com.dungta.www.phunwareinterviewhomework.model;
  * Model class taken from jonofhancock's gist.
  */
 
+import com.google.gson.annotations.SerializedName;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,8 +13,9 @@ import java.util.Date;
 public class ScheduleItem {
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat(
             "yyyy-MM-dd HH:mm:ss Z");
-
+    @SerializedName(value="start_date")
     private Date mStartDate;
+    @SerializedName(value="end_date")
     private Date mEndDate;
 
     public ScheduleItem() {

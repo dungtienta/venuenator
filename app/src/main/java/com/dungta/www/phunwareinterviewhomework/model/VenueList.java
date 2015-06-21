@@ -13,16 +13,22 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
- * Created by Dung on 6/11/2015.
+ * Singleton class to store list of venues retrieved from AWS S3.
  */
 public class VenueList {
     private static ArrayList<Venue> mVenues;
-    private VenuesAPI mApi;
     private static VenueList sVenueList;
-    private static RestClient sRestClient;
+    public RestClient mRestClient;
 
     private Context mAppContext;
 
+    /**
+     * Instantiates new VenueList object, or retrieves instance if exist already.
+     * Context param provided to make sure list is same.
+     *
+     * @param c context object to
+     * @return
+     */
     public static VenueList get(Context c) {
         if (sVenueList == null) {
             sVenueList = new VenueList(c.getApplicationContext());
@@ -32,6 +38,7 @@ public class VenueList {
 
     private VenueList(Context appContext) {
         mAppContext = appContext;
+        mRestClient = new RestClient();
     }
 
     public ArrayList<Venue> getVenues() {
@@ -49,5 +56,9 @@ public class VenueList {
 
     public void updateVenues(ArrayList <Venue> updatedVenues) {
        mVenues = updatedVenues;
+    }
+
+    public RestClient getRestClient() {
+        return mRestClient;
     }
 }

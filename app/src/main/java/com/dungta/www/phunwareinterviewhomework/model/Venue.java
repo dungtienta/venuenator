@@ -2,14 +2,19 @@ package com.dungta.www.phunwareinterviewhomework.model;
 
 /**
  * Model class taken from jonofhancock's gist.
+ * Modified to use with retrofit library
  */
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public class Venue {
-
+    /**
+     * TODO: use fieldnamingstrategy instead of @serialized name
+     * for cleaner code in future
+     */
     // Core fields
     @SerializedName(value="id")
     private long mId;
@@ -43,7 +48,8 @@ public class Venue {
     private String mTicketLink;
     @SerializedName(value="image_url")
     private String mImageUrl;
-    //@SerializedName(value="schedule")
+    @SerializedName(value="schedule")
+    @Expose
     private List<ScheduleItem> mSchedule;
 
     // computed fields
