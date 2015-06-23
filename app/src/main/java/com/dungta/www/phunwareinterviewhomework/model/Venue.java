@@ -27,7 +27,7 @@ public class Venue {
     @Expose
     private String city;
     @Expose
-    private Integer id;
+    private Long id;
     @Expose
     private String tollfreephone;
     @Expose
@@ -159,7 +159,7 @@ public class Venue {
      * @return
      * The id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -168,7 +168,7 @@ public class Venue {
      * @param id
      * The id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

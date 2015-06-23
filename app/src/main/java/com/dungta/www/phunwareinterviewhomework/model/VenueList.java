@@ -2,15 +2,9 @@ package com.dungta.www.phunwareinterviewhomework.model;
 
 import android.content.Context;
 
-import com.dungta.www.phunwareinterviewhomework.RestClient;
-import com.dungta.www.phunwareinterviewhomework.VenuesAPI;
+import com.dungta.www.phunwareinterviewhomework.util.RestClient;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * Singleton class to store list of venues retrieved from provided JSON feed.
@@ -27,10 +21,10 @@ public class VenueList {
      * Instantiates new VenueList object, or retrieves instance if exist already.
      * Context param provided to make sure list is same.
      *
-     * @param c context object to
-     * @return
+     * @param c global context
+     * @return singleton instance of VenueList
      */
-    public static VenueList get(Context c) {
+    public static synchronized VenueList get(Context c) {
         if (sVenueList == null) {
             sVenueList = new VenueList(c.getApplicationContext());
         }
@@ -38,7 +32,7 @@ public class VenueList {
     }
 
     /**
-     * Private constructor because singleton. Gets context
+     * Private constructor because singleton.
      *
      * @param appContext
      */

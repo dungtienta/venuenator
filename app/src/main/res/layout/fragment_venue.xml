@@ -6,7 +6,7 @@
                  xmlns:tools="http://schemas.android.com/tools"
                  android:layout_width="match_parent"
                  android:layout_height="match_parent"
-                 tools:context="com.dungta.www.phunwareinterviewhomework.VenueFragment">
+                 tools:context="com.dungta.www.phunwareinterviewhomework.fragment.VenueFragment">
 
         <FrameLayout
             android:id="@+id/venue_header"
@@ -86,6 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/venue_phone_textView"
             android:paddingLeft="16dp"
+            android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:orientation="vertical"/>
 
