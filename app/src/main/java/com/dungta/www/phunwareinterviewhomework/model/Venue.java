@@ -1,211 +1,319 @@
 package com.dungta.www.phunwareinterviewhomework.model;
 
-/**
- * Model class taken from jonofhancock's gist.
- * Modified to use with retrofit library
- */
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
+/**
+ * Class generated from http://www.jsonschema2pojo.org/ from JSON provided at
+ * https://s3.amazonaws.com/jon-hancock-phunware/nflapi-static.json
+ */
 public class Venue {
-    /**
-     * TODO: use fieldnamingstrategy instead of @serialized name
-     * for cleaner code in future
-     */
-    // Core fields
-    @SerializedName(value="id")
-    private long mId;
-    @SerializedName(value="pcode")
-    private int mPcode;
-    @SerializedName(value="latitude")
-    private double mLatitude;
-    @SerializedName(value="longitude")
-    private double mLongitude;
-    @SerializedName(value="name")
-    private String mName;
-    @SerializedName(value="address")
-    private String mAddress;
-    @SerializedName(value="city")
-    private String mCity;
-    @SerializedName(value="state")
-    private String mState;
-    @SerializedName(value="zip")
-    private String mZip;
-    @SerializedName(value="phone")
-    private String mPhone;
 
-    // Super Bowl venue fields
-    //@SerializedName(value="tollfreephone")
-    private String mTollFreePhone;
-    @SerializedName(value="url")
-    private String mUrl;
-    @SerializedName(value="description")
-    private String mDescription;
-    //@SerializedName(value="ticket_link")
-    private String mTicketLink;
-    @SerializedName(value="image_url")
-    private String mImageUrl;
-    @SerializedName(value="schedule")
     @Expose
-    private List<ScheduleItem> mSchedule;
+    private String zip;
+    @Expose
+    private String phone;
+    @SerializedName("ticket_link")
+    @Expose
+    private String ticketLink;
+    @Expose
+    private String state;
+    @Expose
+    private Integer pcode;
+    @Expose
+    private String city;
+    @Expose
+    private Integer id;
+    @Expose
+    private String tollfreephone;
+    @Expose
+    private List<Schedule> schedule = new ArrayList<Schedule>();
+    @Expose
+    private String address;
+    @SerializedName("image_url")
+    @Expose
+    private String imageUrl;
+    @Expose
+    private String description;
+    @Expose
+    private String name;
+    @Expose
+    private Double longitude;
+    @Expose
+    private Double latitude;
 
-    // computed fields
-    private float mDistance;
-
-    public String getDescription() {
-        return mDescription;
-    }
-
-    public void setDescription(String description) {
-        mDescription = description;
-    }
-
-    public String getTicketLink() {
-        return mTicketLink;
-    }
-
-    public void setTicketLink(String ticketLink) {
-        mTicketLink = ticketLink;
-    }
-
-    public List<ScheduleItem> getSchedule() {
-        return mSchedule;
-    }
-
-    public void setSchedule(List<ScheduleItem> schedule) {
-        mSchedule = schedule;
-    }
-
-    public String getTollFreePhone() {
-        return mTollFreePhone;
-    }
-
-    public void setTollFreePhone(String tollFreePhone) {
-        mTollFreePhone = tollFreePhone;
-    }
-
-    public String getUrl() {
-        return mUrl;
-    }
-
-    public void setUrl(String url) {
-        mUrl = url;
-    }
-
-    public Venue() {
-
-    }
-
-    public long getId() {
-        return mId;
-    }
-
-    public void setId(long id) {
-        mId = id;
-    }
-
-    public String getName() {
-        return mName;
-    }
-
-    public void setName(String name) {
-        this.mName = name;
-    }
-
-    public String getAddress() {
-        return mAddress;
-    }
-
-    public void setAddress(String address) {
-        mAddress = address;
-    }
-
-    public String getCity() {
-        return mCity;
-    }
-
-    public void setCity(String city) {
-        mCity = city;
-    }
-
-    public String getState() {
-        return mState;
-    }
-
-    public void setState(String state) {
-        mState = state;
-    }
-
+    /**
+     *
+     * @return
+     * The zip
+     */
     public String getZip() {
-        return mZip;
+        return zip;
     }
 
+    /**
+     *
+     * @param zip
+     * The zip
+     */
     public void setZip(String zip) {
-        mZip = zip;
+        this.zip = zip;
     }
 
+    /**
+     *
+     * @return
+     * The phone
+     */
     public String getPhone() {
-        return mPhone;
+        return phone;
     }
 
+    /**
+     *
+     * @param phone
+     * The phone
+     */
     public void setPhone(String phone) {
-        mPhone = phone;
+        this.phone = phone;
     }
 
-    public double getLatitude() {
-        return mLatitude;
+    /**
+     *
+     * @return
+     * The ticketLink
+     */
+    public String getTicketLink() {
+        return ticketLink;
     }
 
-    public void setLatitude(double latitude) {
-        mLatitude = latitude;
+    /**
+     *
+     * @param ticketLink
+     * The ticket_link
+     */
+    public void setTicketLink(String ticketLink) {
+        this.ticketLink = ticketLink;
     }
 
-    public double getLongitude() {
-        return mLongitude;
+    /**
+     *
+     * @return
+     * The state
+     */
+    public String getState() {
+        return state;
     }
 
-    public void setLongitude(double longitude) {
-        mLongitude = longitude;
+    /**
+     *
+     * @param state
+     * The state
+     */
+    public void setState(String state) {
+        this.state = state;
     }
 
-    public float getDistance() {
-        return mDistance;
+    /**
+     *
+     * @return
+     * The pcode
+     */
+    public Integer getPcode() {
+        return pcode;
     }
 
-    public void setDistance(float distance) {
-        mDistance = distance;
+    /**
+     *
+     * @param pcode
+     * The pcode
+     */
+    public void setPcode(Integer pcode) {
+        this.pcode = pcode;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Venue && ((Venue) o).getId() == mId) {
-            return true;
-        }
-        return false;
+    /**
+     *
+     * @return
+     * The city
+     */
+    public String getCity() {
+        return city;
     }
 
-    @Override
-    public int hashCode() {
-        return Long.valueOf(mId).hashCode();
+    /**
+     *
+     * @param city
+     * The city
+     */
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public int getPcode() {
-        return mPcode;
+    /**
+     *
+     * @return
+     * The id
+     */
+    public Integer getId() {
+        return id;
     }
 
-    public void setPcode(int pcode) {
-        mPcode = pcode;
+    /**
+     *
+     * @param id
+     * The id
+     */
+    public void setId(Integer id) {
+        this.id = id;
     }
 
+    /**
+     *
+     * @return
+     * The tollfreephone
+     */
+    public String getTollfreephone() {
+        return tollfreephone;
+    }
+
+    /**
+     *
+     * @param tollfreephone
+     * The tollfreephone
+     */
+    public void setTollfreephone(String tollfreephone) {
+        this.tollfreephone = tollfreephone;
+    }
+
+    /**
+     *
+     * @return
+     * The schedule
+     */
+    public List<Schedule> getSchedule() {
+        return schedule;
+    }
+
+    /**
+     *
+     * @param schedule
+     * The schedule
+     */
+    public void setSchedule(List<Schedule> schedule) {
+        this.schedule = schedule;
+    }
+
+    /**
+     *
+     * @return
+     * The address
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     *
+     * @param address
+     * The address
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    /**
+     *
+     * @return
+     * The imageUrl
+     */
     public String getImageUrl() {
-        return mImageUrl;
+        return imageUrl;
     }
 
+    /**
+     *
+     * @param imageUrl
+     * The image_url
+     */
     public void setImageUrl(String imageUrl) {
-        mImageUrl = imageUrl;
+        this.imageUrl = imageUrl;
+    }
+
+    /**
+     *
+     * @return
+     * The description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     *
+     * @param description
+     * The description
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     *
+     * @return
+     * The name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     *
+     * @param name
+     * The name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     *
+     * @return
+     * The longitude
+     */
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    /**
+     *
+     * @param longitude
+     * The longitude
+     */
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    /**
+     *
+     * @return
+     * The latitude
+     */
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    /**
+     *
+     * @param latitude
+     * The latitude
+     */
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
 }

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.dungta.www.phunwareinterviewhomework.model.ScheduleItem;
+import com.dungta.www.phunwareinterviewhomework.model.Schedule;
 import com.dungta.www.phunwareinterviewhomework.model.Venue;
 import com.dungta.www.phunwareinterviewhomework.model.VenueList;
 
@@ -57,7 +57,7 @@ public class VenueSplashScreen extends Activity{
             @Override
             public void success(ArrayList<Venue> venues, Response response) {
                 VenueList.get(getApplication()).updateVenues(venues);
-                //test();
+                test();
                 Intent i = new Intent(getApplication(), VenueListActivity.class);
                 startActivity(i);
                 finish();
@@ -84,10 +84,10 @@ public class VenueSplashScreen extends Activity{
     }
 
     private void test() {
-        for(Venue v : VenueList.get(this).getVenues()) {
+        for(Venue v : VenueList.get(getApplication()).getVenues()) {
             Log.d("something", "more: " + v.getName());
-            List<ScheduleItem> test1 = v.getSchedule();
-            for (ScheduleItem s : test1) {
+            List<Schedule> test1 = v.getSchedule();
+            for (Schedule s : test1) {
                 Log.d("SCHEDULE DATE: ", "DATE: " + s.getEndDate());
             }
         }

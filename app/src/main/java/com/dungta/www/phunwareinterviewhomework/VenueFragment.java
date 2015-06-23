@@ -3,7 +3,6 @@ package com.dungta.www.phunwareinterviewhomework;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,8 +10,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.dungta.www.phunwareinterviewhomework.model.Schedule;
 import com.dungta.www.phunwareinterviewhomework.model.Venue;
 import com.dungta.www.phunwareinterviewhomework.model.VenueList;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -21,6 +22,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Fragment class to be hosted by either single fragment or
@@ -31,9 +39,9 @@ public class VenueFragment extends Fragment{
     public static final String EXTRA_VENUE_ID =
             "com.dungta.www.phunwareinterviewhomework.venue_id";
 
-    public static FragmentManager sFragmentManager;
-
+    private View mView;
     private Venue mVenue;
+    private Venue mShareVenue;
     private String mImageUrl;
     private LatLng mVenueLocation;
 
@@ -41,6 +49,7 @@ public class VenueFragment extends Fragment{
     private TextView mAddressTextView;
     private ImageView mVenueImageView;
     private TextView mPhoneTextView;
+    private View mScheduleList;
     private GoogleMap mMap;
 
     /**
@@ -96,19 +105,21 @@ public class VenueFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_venue, container, false);
+        mView = inflater.inflate(R.layout.fragment_venue, container, false);
 
-        mNameTextView = (TextView) v.findViewById(R.id.venue_name_textView);
+        mNameTextView = (TextView) mView.findViewById(R.id.venue_name_textView);
         mNameTextView.setText(mVenue.getName());
 
+        mAddressTextView = (TextView) mView.findViewById(R.id.venue_address_textView);
         if (!mVenue.getAddress().isEmpty()) {
-            mAddressTextView = (TextView) v.findViewById(R.id.venue_address_textView);
             mAddressTextView.setText(mVenue.getAddress()
                     + ", " + mVenue.getCity() + " " + mVenue.getZip());
+        } else {
+            mAddressTextView.setVisibility(View.GONE);
         }
         //Load image url from venue object into ImageView
         mImageUrl = mVenue.getImageUrl();
-        mVenueImageView = (ImageView) v.findViewById(R.id.venue_image);
+        mVenueImageView = (ImageView) mView.findViewById(R.id.venue_image);
         if (mImageUrl.isEmpty()) {
             mVenueImageView.setImageDrawable(getResources()
                     .getDrawable(R.drawable.phunware_hq));
@@ -125,10 +136,41 @@ public class VenueFragment extends Fragment{
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mVenueLocation, 12.0f));
         }
 
-        mPhoneTextView = (TextView) v.findViewById(R.id.venue_phone);
-        mPhoneTextView.setText(mVenue.getPhone());
+        mPhoneTextView = (TextView) mView.findViewById(R.id.venue_phone_textView);
+        if (mVenue.getPhone() != "") {
+            mPhoneTextView.setText("Phone: " + mVenue.getPhone());
+        } else {
+            mPhoneTextView.setVisibility(View.GONE);
+        }
 
-        return v;
+        //Setup schedule logic
+        setUpScheduleTextView();
+
+        return mView;
+    }
+
+    /**
+     * Gets schedule information from Venue object in form of list.
+     * Iterates through list and parses DATE information to View object
+     */
+    private void setUpScheduleTextView() {
+        if (mView != null) {
+            mScheduleList = mView.findViewById(R.id.venue_schedule_information);
+            for (Schedule s : mVenue.getSchedule()) {
+                //Calendar logic
+                String startDate = convertLocalReadableTime(stringToDate(s.getStartDate()));
+                String endDate = convertLocalReadableTime(stringToDate(s.getEndDate()));
+
+                //Add layout properties to new text view object
+                TextView scheduleText = new TextView(getActivity());
+                scheduleText.setTextSize(16);
+                scheduleText.setPadding(16,0,0,8);
+                scheduleText.setText(startDate + " to " + endDate);
+
+                ((LinearLayout) mScheduleList).addView(scheduleText);
+            }
+
+        }
     }
 
     /**
@@ -169,16 +211,47 @@ public class VenueFragment extends Fragment{
      * application to handle intent.
      */
     private void shareVenue() {
+        mShareVenue = VenueList.get(getActivity()).getSelectedVenue();
         //TODO: Put more extras if necessary, (ex: address -> Google Maps)
         Intent sendIntent = new Intent();
         //Set intent action and contents
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT,
-                "Venue name: " + mVenue.getName() + "\n" +
-                "Venue address: " + mVenue.getAddress() + ", " +
+                "Venue Name: " + mVenue.getName() + "\n" +
+                "Venue Address: " + mVenue.getAddress() + ", " +
                 mVenue.getCity() + " " + mVenue.getZip());
         sendIntent.setType("text/plain");
         startActivity(Intent.createChooser(sendIntent,
                 getResources().getText(R.string.venue_create_chooser_send)));
+    }
+
+    /**
+     * Converts date String to Date object
+     *
+     * @param dateString string that is to be converted
+     * @return Date object from converted String
+     */
+    private Date stringToDate(String dateString) {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+        try {
+            return format.parse(dateString);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Takes in a Date object param and parses to human readable format
+     * Returns Date as String in local time
+     *
+     * @param date object to be parsed
+     * @return string object of readable date in local time
+     */
+    private String convertLocalReadableTime(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a ");
+        sdf.setTimeZone(TimeZone.getDefault());
+        return sdf.format(date);
     }
 }

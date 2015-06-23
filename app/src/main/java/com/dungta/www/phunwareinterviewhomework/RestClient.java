@@ -1,12 +1,6 @@
 package com.dungta.www.phunwareinterviewhomework;
 
-import com.dungta.www.phunwareinterviewhomework.model.ScheduleItem;
-import com.dungta.www.phunwareinterviewhomework.model.VenueDeserializer;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
 
 /**
  * Class creates client to handle rest services through retrofit
@@ -24,13 +18,9 @@ public class RestClient {
      * RestAdapter used to create api object to query rest services.
      */
     public RestClient() {
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(ScheduleItem.class, new VenueDeserializer())
-                .create();
 
         RestAdapter adapter = new RestAdapter.Builder()
                 .setEndpoint(ENDPOINT)
-                .setConverter(new GsonConverter(gson))
                 .build();
         api = adapter.create(VenuesAPI.class);
     }

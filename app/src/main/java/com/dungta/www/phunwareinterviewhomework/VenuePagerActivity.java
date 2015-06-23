@@ -51,12 +51,19 @@ public class VenuePagerActivity extends AppCompatActivity {
         });
         //Set listener for when page changes
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            //Unused abstract method, just need to implement for callback interface
             public void onPageScrollStateChanged(int state) {
             }
-
+            //Unused abstract method, just need to implement for callback interface
             public void onPageScrolled(int pos, float posOffset, int posOffsetPixels) {
             }
 
+            /**
+             * Handles when new page is selected, gets position of page and sets page
+             * name according to selected venue position
+             *
+             * @param pos index of page currently beingdisplayed
+             */
             public void onPageSelected(int pos) {
                 Venue venue = mVenues.get(pos);
                 if (venue.getName() != null) {

@@ -21,27 +21,33 @@
                 android:layout_margin="8dp"
                 />
 
-            <TextView
-                android:id="@+id/venue_name_textView"
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#CCFFFFFF"
-                android:paddingLeft="16dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="32dp"
-                android:layout_gravity="bottom"
-                android:textSize="24sp"
-                style="?android:listSeparatorTextViewStyle"/>
+                android:layout_gravity="bottom">
 
-            <TextView
-                android:id="@+id/venue_address_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="16dp"
-                android:paddingLeft="16dp"
-                android:layout_gravity="bottom"
-                android:textColor="@color/venue_detail_text"
-                android:textSize="16sp"/>
+                <TextView
+                    android:id="@+id/venue_name_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#CCFFFFFF"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="8dp"
+                    android:textSize="24sp"
+                    style="?android:listSeparatorTextViewStyle"/>
+
+                <TextView
+                    android:id="@+id/venue_address_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#CCFFFFFF"
+                    android:paddingBottom="16dp"
+                    android:paddingLeft="16dp"
+                    android:layout_below="@id/venue_name_textView"
+                    android:textColor="@color/venue_detail_text"
+                    android:textSize="16sp"/>
+
+            </RelativeLayout>
 
         </FrameLayout>
 
@@ -56,7 +62,7 @@
             class="com.google.android.gms.maps.SupportMapFragment" />
 
         <TextView
-            android:id="@+id/venue_information_title"
+            android:id="@+id/venue_information_title_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/venue_map"
@@ -66,11 +72,22 @@
             style="?android:listSeparatorTextViewStyle"/>
 
         <TextView
-            android:id="@+id/venue_phone"
+            android:id="@+id/venue_phone_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/venue_information_title"
+            android:paddingLeft="16dp"
+            android:paddingBottom="16dp"
+            android:layout_below="@id/venue_information_title_textView"
             android:paddingTop="16dp"/>
+
+        <LinearLayout
+            android:id="@+id/venue_schedule_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/venue_phone_textView"
+            android:paddingLeft="16dp"
+            android:paddingBottom="16dp"
+            android:orientation="vertical"/>
 
     </RelativeLayout>
 
